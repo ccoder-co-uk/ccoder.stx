@@ -18,12 +18,12 @@ BEGIN
 	DECLARE @CanCreate as tinyint = (
 		SELECT TOP 1 CASE 
 			WHEN EXISTS (
-				SELECT * FROM [Security].[Roles] r
+				SELECT TOP 1 r.Id FROM [Security].[Roles] r
 				INNER JOIN [Security].[FolderRoles] fr ON fr.[FolderId]=@FolderId AND fr.RoleId=r.Id
 				INNER JOIN [Security].[UserRoles] ur ON ur.UserId=@UserId AND ur.RoleId=fr.RoleId
 				WHERE (r.[Privs] LIKE '%file_update%' OR r.[Privs] LIKE '%app_admin%') AND r.AppId=@AppId
 			) OR EXISTS (				
-				SELECT * FROM [Security].[Roles] r
+				SELECT TOP 1 r.Id FROM [Security].[Roles] r
 				INNER JOIN [Security].[UserRoles] ur ON ur.UserId=@UserId AND ur.RoleId=r.Id
 				WHERE (r.[Privs] LIKE '%app_admin%') AND r.AppId=@AppId
 			)

@@ -1,5 +1,4 @@
-﻿using Core.DMS.E2E.Tests.Brokers;
-using Dapper;
+﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.SqlServer.Dac;

@@ -15,7 +15,7 @@ AS
 BEGIN
     DECLARE @IsAppAdmin as tinyint = (
         CASE WHEN EXISTS (				
-            SELECT TOP 1 * FROM [Security].[Roles] r
+            SELECT TOP 1 r.Id FROM [Security].[Roles] r
             INNER JOIN [Security].[UserRoles] ur ON ur.UserId=@UserId AND ur.RoleId=r.Id
             WHERE (r.[Privs] LIKE '%app_admin%') AND r.AppId=@AppId
         ) THEN 1
@@ -44,7 +44,7 @@ BEGIN
     FROM @NewPaths np
     LEFT JOIN [DMS].[Folders] newDMSFolder ON newDMSFolder.AppId=@AppId AND newDMSFolder.[Path]=np.NewDestinationPath
     WHERE newDMSFolder.Id IS NOT NULL AND ((@IsAppAdmin = 1) OR EXISTS (
-        SELECT TOP 1 * FROM [Security].[Roles] r
+        SELECT TOP 1 r.Id FROM [Security].[Roles] r
         INNER JOIN [Security].[FolderRoles] fr ON fr.[FolderId]=newDMSFolder.Id AND fr.RoleId=r.Id
         INNER JOIN [Security].[UserRoles] ur ON ur.UserId=@UserId AND ur.RoleId=fr.RoleId
         WHERE (r.[Privs] LIKE '%folder_update%') AND r.AppId=@AppId

@@ -4,8 +4,6 @@ using Core.DMS.Objects.DTOs;
 using Core.DMS.Services.Foundations;
 using Core.DMS.Services.Orchestration;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +11,8 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Identity.Web;
 using System.Data;
 using System.IO;
-using System.Security.Claims;
 
 namespace Core.DMS.Api;
 public class Program
@@ -68,9 +64,6 @@ public class Program
         app.UseCors();
         app.UseAuthentication();
         app.UseAuthorization();
-
-        app.MapGet("/microsoftlogin", ([FromServices] IAuthenticationBroker broker) => $"Hello World {broker.GetUserId()}")
-            .RequireAuthorization(policyBuilder => policyBuilder.AddAuthenticationSchemes(MicrosoftAccountDefaults.AuthenticationScheme).RequireClaim(ClaimTypes.Email));
 
         app.MapGet("/DMS/{*path}", async ([FromServices] IDMSResultOrchestrationService godClass, [FromServices] IHttpContextAccessor accessor, string path, int version = 0)
             =>
