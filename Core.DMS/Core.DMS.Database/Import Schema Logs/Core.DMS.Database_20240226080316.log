@@ -1,0 +1,88 @@
+26/02/2024 20:03:16	This log contains information about the import schema operation into project 'Core.DMS.Database' on computer 'RAZERTOPPY' by user 'callu'.
+26/02/2024 20:03:17	Import of database schema has started.
+26/02/2024 20:03:27	Gathering database credentials
+26/02/2024 20:03:27	Gathering database options
+26/02/2024 20:03:27	Gathering generic database scoped configuration option
+26/02/2024 20:03:27	Gathering users
+26/02/2024 20:03:27	Gathering roles
+26/02/2024 20:03:27	Gathering application roles
+26/02/2024 20:03:27	Gathering role memberships
+26/02/2024 20:03:27	Gathering filegroups
+26/02/2024 20:03:27	Gathering full-text catalogs
+26/02/2024 20:03:27	Gathering assemblies
+26/02/2024 20:03:27	Gathering certificates
+26/02/2024 20:03:27	Gathering asymmetric keys
+26/02/2024 20:03:27	Gathering symmetric keys
+26/02/2024 20:03:27	Gathering encrypted symmetric keys
+26/02/2024 20:03:27	Gathering schemas
+26/02/2024 20:03:27	Gathering XML schema collections
+26/02/2024 20:03:27	Gathering user-defined data types
+26/02/2024 20:03:27	Gathering user-defined types
+26/02/2024 20:03:27	Gathering table types
+26/02/2024 20:03:27	Gathering unique keys for table types
+26/02/2024 20:03:27	Gathering primary keys for table types
+26/02/2024 20:03:27	Gathering indexes for table types
+26/02/2024 20:03:27	Gathering check constraints for table types
+26/02/2024 20:03:27	Gathering default constraints for table types
+26/02/2024 20:03:27	Gathering partition functions
+26/02/2024 20:03:27	Gathering partition schemes
+26/02/2024 20:03:27	Gathering functions
+26/02/2024 20:03:27	Gathering encrypted functions
+26/02/2024 20:03:27	Gathering aggregates
+26/02/2024 20:03:27	Gathering procedures
+26/02/2024 20:03:27	Gathering encrypted procedures
+26/02/2024 20:03:27	Gathering tables
+26/02/2024 20:03:27	Gathering primary keys
+26/02/2024 20:03:27	Gathering unique constraints
+26/02/2024 20:03:27	Gathering foreign keys
+26/02/2024 20:03:27	Gathering default constraints
+26/02/2024 20:03:27	Gathering check constraints
+26/02/2024 20:03:27	Gathering views
+26/02/2024 20:03:27	Gathering encrypted views
+26/02/2024 20:03:27	Gathering indexes
+26/02/2024 20:03:27	Gathering statistics
+26/02/2024 20:03:27	Gathering full-text index stoplists
+26/02/2024 20:03:27	Gathering search property lists
+26/02/2024 20:03:28	Gathering search properties
+26/02/2024 20:03:28	Gathering full-text indexes
+26/02/2024 20:03:28	Gathering column store indexes
+26/02/2024 20:03:28	Gathering spatial indexes
+26/02/2024 20:03:28	Gathering XML indexes
+26/02/2024 20:03:28	Gathering Selective XML indexes
+26/02/2024 20:03:28	Gathering encrypted triggers
+26/02/2024 20:03:28	Gathering triggers
+26/02/2024 20:03:28	Gathering encrypted and clr ddl triggers
+26/02/2024 20:03:28	Gathering ddl triggers
+26/02/2024 20:03:28	Creating edge constraints
+26/02/2024 20:03:28	Gathering synonyms
+26/02/2024 20:03:28	Gathering defaults
+26/02/2024 20:03:28	Gathering data constraint uddt bindings
+26/02/2024 20:03:28	Gathering rules
+26/02/2024 20:03:28	Gathering data constraint uddt bindings
+26/02/2024 20:03:28	Gathering message types
+26/02/2024 20:03:28	Gathering queues
+26/02/2024 20:03:28	Gathering contracts
+26/02/2024 20:03:28	Gathering services
+26/02/2024 20:03:28	Gathering event notifications
+26/02/2024 20:03:28	Gathering remote service bindings
+26/02/2024 20:03:28	Gathering broker priorities
+26/02/2024 20:03:28	Gathering signatures
+26/02/2024 20:03:28	Gathering compression options
+26/02/2024 20:03:28	Gathering sequence types
+26/02/2024 20:03:28	Gathering security policies
+26/02/2024 20:03:28	Gather column encryption keys
+26/02/2024 20:03:28	Gathering column master keys
+26/02/2024 20:03:28	Gathering external data sources
+26/02/2024 20:03:28	Gathering external file formats
+26/02/2024 20:03:28	Gathering external tables
+26/02/2024 20:03:28	Gathering XML index compression options
+26/02/2024 20:03:28	Gathering extended properties
+26/02/2024 20:03:28	Gathering assemblies
+26/02/2024 20:03:28	Gathering credentials
+26/02/2024 20:03:28	Gathering logins
+26/02/2024 20:03:28	Gathering server audits
+26/02/2024 20:03:29	Scanning project for duplicate elements
+26/02/2024 20:03:30	Finished duplicate element processing
+26/02/2024 20:03:31	Finished importing database.
+26/02/2024 20:03:31	A summary of the import was saved to the following location: C:\Users\callu\source\repos\Core.DMS\Core.DMS.Database\Import Schema Logs\Core.DMS.Database_20240226080316.log
+26/02/2024 20:03:31	Click Finish to continue...

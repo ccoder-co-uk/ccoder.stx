@@ -1,0 +1,6 @@
+@Core.DMS.E2E.Tests.FakeSSO_HostAddress = http://localhost:5218
+
+GET {{Core.DMS.E2E.Tests.FakeSSO_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
