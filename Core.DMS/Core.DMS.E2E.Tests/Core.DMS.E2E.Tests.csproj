@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.28" />
+    <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
@@ -27,6 +28,9 @@
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="cCoderCore-DMS-Module.dacpac">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
