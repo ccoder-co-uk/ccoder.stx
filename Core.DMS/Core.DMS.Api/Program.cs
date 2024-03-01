@@ -11,6 +11,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Data;
 using System.IO;
 
@@ -58,12 +59,29 @@ public class Program
 
         var app = builder.Build();
 
-
         app.UseHttpsRedirection();
 
         app.UseCors();
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.MapGet("/Api/Folder/GetFoldersForParentId", ([FromServices] IFolderService folderService,
+            [FromServices] IAuthenticationBroker authenticationBroker,
+            [FromServices] IAppService appService,
+            Guid? parentId) 
+            => folderService.GetFoldersForParentId(appService.GetAppId(), authenticationBroker.GetUserId(), parentId))
+        .WithOpenApi()
+        .RequireAuthorization();
+
+        app.MapGet("/Api/File/GetFilesInFolder", ([FromServices] IFileService fileService,
+            [FromServices] IAuthenticationBroker authenticationBroker,
+            [FromServices] IAppService appService,
+            Guid folderId,
+            int skip = 0,
+            int take = 1000)
+            => fileService.GetFilesInFolder(appService.GetAppId(), authenticationBroker.GetUserId(), folderId, skip, take))
+        .WithOpenApi()
+        .RequireAuthorization();
 
         app.MapGet("/DMS/{*path}", async ([FromServices] IDMSResultOrchestrationService godClass, [FromServices] IHttpContextAccessor accessor, string path, int version = 0)
             =>
@@ -74,10 +92,10 @@ public class Program
         .WithOpenApi()
         .RequireAuthorization();
 
-        app.MapPost("/DMS/{*path}", async ([FromServices] IDMSResultOrchestrationService godClass, [FromServices] IHttpContextAccessor accesor, string moveTo = "", string path = "") =>
+        app.MapPost("/DMS/{*path}", async ([FromServices] IDMSResultOrchestrationService godClass, [FromServices] IHttpContextAccessor accessor, string moveTo = "", string path = "") =>
         {
             using var memoryStream = new MemoryStream();
-            await accesor.HttpContext.Request.Body.CopyToAsync(memoryStream);
+            await accessor.HttpContext.Request.Body.CopyToAsync(memoryStream);
             memoryStream.Position = 0;
 
             if (!string.IsNullOrEmpty(moveTo))
