@@ -1,4 +1,5 @@
 ﻿using Core.DMS.Objects.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,5 +16,6 @@ namespace Core.DMS.Services.Foundations
         Task<bool> CanCreateFolder(int appId, string userId, string path);
         Task<bool> HasPrivToMoveFolderToExistingFolder(int appId, string userId, string oldPath, string newPath);
         Task MoveFolderToFolder(int appId, string userId, string oldPath, string newPath);
+        Task<IEnumerable<Folder>> GetFoldersForParentId(int appId, string userId, Guid? parentId);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Core.DMS.Data.Brokers;
 using Core.DMS.Objects.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,6 +14,9 @@ namespace Core.DMS.Services.Foundations
         {
             this.broker = broker;
         }
+
+        public Task<IEnumerable<Folder>> GetFoldersForParentId(int appId, string userId, Guid? parentId)
+            => broker.GetFoldersForParentId(appId, userId, parentId);
 
         public Task<IEnumerable<Folder>> GetAllFolders(int appId, string userId, string startingPath)
             => broker.GetAllFolders(appId, userId, startingPath);

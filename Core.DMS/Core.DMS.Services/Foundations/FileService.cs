@@ -1,5 +1,6 @@
 ﻿using Core.DMS.Data.Brokers;
 using Core.DMS.Objects.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,6 +14,12 @@ namespace Core.DMS.Services.Foundations
         {
             this.fileBroker = fileBroker;
         }
+
+        public Task<IEnumerable<File>> GetFilesInFolder(int appId, string userId, Guid folderId, int skip = 0, int take = 100)
+            => fileBroker.GetFilesInFolder(appId, userId, folderId, skip, take);
+
+        public Task<int> GetFileCountInFolder(int appId, string userId, Guid folderId)
+            => fileBroker.GetFileCountInFolder(appId, userId, folderId);
 
         public Task<IEnumerable<File>> GetFiles(int appId, string userId, string startingPath)
             => fileBroker.GetFiles(appId, userId, startingPath);
