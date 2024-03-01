@@ -106,5 +106,8 @@
     <Build Include="Security\CMS.sql" />
     <Build Include="Security\DMS.sql" />
     <Build Include="Security\Security.sql" />
+    <Build Include="DMS\Stored Procedures\GetFoldersForParentId.sql" />
+    <Build Include="DMS\Stored Procedures\GetFilesInFolder.sql" />
+    <Build Include="DMS\Stored Procedures\GetFileCountInFolder.sql" />
   </ItemGroup>
 </Project>
