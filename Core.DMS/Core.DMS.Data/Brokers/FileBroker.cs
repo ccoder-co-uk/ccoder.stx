@@ -1,5 +1,6 @@
 ﻿using Core.DMS.Objects.Entities;
 using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -14,6 +15,20 @@ namespace Core.DMS.Data.Brokers
         {
             this.connection = connection;
         }
+
+        public Task<int> GetFileCountInFolder(int appId, string userId, Guid folderId)
+            => connection.ExecuteScalarAsync<int>(
+                sql: "[DMS].[GetFileCountInFolder]",
+                param: new { AppId = appId, UserId = userId, Folder = folderId },
+                commandType: CommandType.StoredProcedure
+            );
+
+        public Task<IEnumerable<File>> GetFilesInFolder(int appId, string userId, Guid folderId, int skip = 0, int take = 100)
+            => connection.QueryAsync<File>(
+                sql: "[DMS].[GetFilesForFolderId]",
+                param: new { AppId = appId, UserId = userId, FolderId = folderId, Skip = skip, Take = take },
+                commandType: CommandType.StoredProcedure
+            );
 
         public Task<IEnumerable<File>> GetFiles(int appId, string userId, string startingPath)
             => connection.QueryAsync<File>(

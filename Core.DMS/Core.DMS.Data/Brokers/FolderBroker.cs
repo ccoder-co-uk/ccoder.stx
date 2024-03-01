@@ -1,5 +1,6 @@
 ﻿using Core.DMS.Objects.Entities;
 using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -14,6 +15,13 @@ namespace Core.DMS.Data.Brokers
         {
             this.connection = connection;
         }
+
+        public Task<IEnumerable<Folder>> GetFoldersForParentId(int appId, string userId, Guid? parentId)
+            => connection.QueryAsync<Folder>(
+                sql: "[DMS].[GetFoldersForParentId]",
+                param: new { AppId = appId, UserId = userId, ParentId = parentId },
+                commandType: CommandType.StoredProcedure
+            );
 
         public Task<IEnumerable<Folder>> GetAllFolders(int appId, string userId, string startingPath)
             => connection.QueryAsync<Folder>(
