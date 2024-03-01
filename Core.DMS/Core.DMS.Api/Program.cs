@@ -30,7 +30,6 @@ public class Program
         builder.Services.AddCors();
 
         builder.Services.AddAuthentication("bearer")
-            .AddCookie("Cookies")
             .AddScheme<AuthenticationSchemeOptions, SSOAuthenticationHandler>("bearer", opts => { });
 
         builder.Services.AddAuthorization();
