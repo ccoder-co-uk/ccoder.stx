@@ -58,7 +58,7 @@ namespace Core.DMS.Data.Brokers
 
         public Task<bool> FileExists(int appId, string userId, string path)
             => connection.ExecuteScalarAsync<bool>(
-                sql: "SELECT [DMS].[CanUpdateFile] (@UserId, @Domain, @Path)",
+                sql: "SELECT [DMS].[FileExists] (@UserId, @AppId, @Path)",
                 param: new { UserId = userId, AppId = appId, Path = path },
                 commandType: CommandType.Text);
 

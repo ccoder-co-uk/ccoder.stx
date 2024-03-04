@@ -6,13 +6,13 @@ using Xunit;
 
 namespace Core.DMS.E2E.Tests
 {
-    public class DMSMoveStoredProcedureTests : BaseTest
+    public class DMSMoveStoredProcedureTests : BaseDatabaseTest
     {
         [Fact]
         public void ShouldMoveFolderWithFileIntoFolderWithoutFile_Then_CreateFile()
         {
             //given
-            Setup();
+            SetupDatabase();
 
             Connection.Execute(
                 sql: $@"
@@ -60,7 +60,7 @@ EXECUTE [DMS].[MoveFolderToFolder]
             var actualFileContents = Connection.Query<FileContent>("SELECT * FROM [DMS].[FileContents]", transaction: Transaction);
 
             //then
-            Cleanup();
+            CleanupDatabase();
 
             Assert.True(actualFolders.Count() == 3
                 && actualFolders.Any(f => f.Path == "test")
@@ -90,7 +90,7 @@ EXECUTE [DMS].[MoveFolderToFolder]
         public void ShouldMoveFolderWithFileIntoFolderWithSameFileName_Then_MergeResults()
         {
             //given
-            Setup();
+            SetupDatabase();
 
             Connection.Execute(
                 sql: $@"
@@ -134,7 +134,7 @@ EXECUTE [DMS].[MoveFolderToFolder]
             var actualContents = Connection.Query<FileContent>("SELECT * FROM [DMS].[FileContents]", transaction: Transaction);
 
             //then
-            Cleanup();
+            CleanupDatabase();
 
             Assert.True(actualFolders.Count() == 3 
                 && actualFolders.Any(f => f.Path == "test") 

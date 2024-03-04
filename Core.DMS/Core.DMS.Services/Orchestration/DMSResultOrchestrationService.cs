@@ -35,7 +35,7 @@ namespace Core.DMS.Services.Orchestration
                 {
                     bool existingFileWithoutAccessCheck = await fileService.FileExists(appId, ssoUserId, path.Lowered);
 
-                    if (!existingFileWithoutAccessCheck)
+                    if (existingFileWithoutAccessCheck)
                     {
                         loggingBroker.LogWarning<DMSResultOrchestrationService>($"User {ssoUserId} unable to read file at path {path.Lowered}");
                         throw new SecurityException("Access Denied!");
@@ -54,15 +54,18 @@ namespace Core.DMS.Services.Orchestration
 
         private async Task BuildPath(Path folderPath, string ssoUserId, int appId)
         {
-            var hasAccess = await folderService.CanBuildFolderAtPath(appId, ssoUserId, folderPath.Lowered);
-
-            if (!hasAccess)
+            if (!await folderService.FolderExists(appId, ssoUserId, folderPath.Lowered))
             {
-                loggingBroker.LogWarning<DMSResultOrchestrationService>($"User can't build path {folderPath} in DMS for app {appService.GetAppId()}");
-                throw new SecurityException("Access Denied!");
-            }
+                var hasAccess = await folderService.CanBuildFolderAtPath(appId, ssoUserId, folderPath.Lowered);
 
-            await folderService.BuildFolderPath(appId, folderPath.Lowered);
+                if (!hasAccess)
+                {
+                    loggingBroker.LogWarning<DMSResultOrchestrationService>($"User {ssoUserId} can't build path {folderPath} in DMS for app {appService.GetAppId()}");
+                    throw new SecurityException("Access Denied!");
+                }
+
+                await folderService.BuildFolderPath(appId, folderPath.Lowered);
+            }
         }
 
         private async Task CreateNewFile(Path path, byte[] requestBytes, string folderPath, string ssoUserId, int appId)
@@ -73,7 +76,7 @@ namespace Core.DMS.Services.Orchestration
 
             if (!hasAccess)
             {
-                loggingBroker.LogWarning<DMSResultOrchestrationService>($"User can't create a file in folder {folderPath} in DMS for app {appId}");
+                loggingBroker.LogWarning<DMSResultOrchestrationService>($"User {ssoUserId} can't create a file in folder {folderPath} in DMS for app {appId}");
                 throw new SecurityException("Access Denied!");
             }
             
@@ -118,7 +121,7 @@ namespace Core.DMS.Services.Orchestration
 
             if (!hasAccess)
             {
-                loggingBroker.LogWarning<DMSResultOrchestrationService>($"User can't create a file in folder {folderPath} in DMS for app {appId}");
+                loggingBroker.LogWarning<DMSResultOrchestrationService>($"User {ssoUserId} can't create a file in folder {folderPath} in DMS for app {appId}");
                 throw new SecurityException("Access Denied!");
             }
 
@@ -310,7 +313,7 @@ namespace Core.DMS.Services.Orchestration
 
                 if (fileContent == null)
                 {   
-                    loggingBroker.LogWarning<DMSResultOrchestrationService>($"User can't see a file @ path {path.Lowered} in DMS for app {appId}");
+                    loggingBroker.LogWarning<DMSResultOrchestrationService>($"User {ssoUserId} can't see a file @ path {path.Lowered} in DMS for app {appId}");
                     throw new SecurityException("Access Denied!");
                 }
                 else
@@ -328,7 +331,7 @@ namespace Core.DMS.Services.Orchestration
 
                 if (folder == null)
                 {
-                    loggingBroker.LogWarning<DMSResultOrchestrationService>($"User can't see a folder @ path {path.Lowered} in DMS for app {appId}");
+                    loggingBroker.LogWarning<DMSResultOrchestrationService>($"User {ssoUserId} can't see a folder @ path {path.Lowered} in DMS for app {appId}");
                     throw new SecurityException("Access Denied!");
                 }
                 else

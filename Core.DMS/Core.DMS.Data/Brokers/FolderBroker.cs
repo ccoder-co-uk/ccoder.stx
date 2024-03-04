@@ -53,7 +53,7 @@ namespace Core.DMS.Data.Brokers
 
         public Task<bool> FolderExists(int appId, string userId, string path)
             => connection.ExecuteScalarAsync<bool>(
-                sql: "SELECT [DMS].[FolderExists] (@UserId, @Domain, @Path)",
+                sql: "SELECT [DMS].[FolderExists] (@UserId, @AppId, @Path)",
                 param: new { UserId = userId, AppId = appId, Path = path },
                 commandType: CommandType.Text
             );

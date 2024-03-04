@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Data;
 using System.IO;
+using System.Security;
 
 namespace Core.DMS.Api;
 public class Program
@@ -85,37 +86,58 @@ public class Program
         app.MapGet("/DMS/{*path}", async ([FromServices] IDMSResultOrchestrationService godClass, [FromServices] IHttpContextAccessor accessor, string path, int version = 0)
             =>
         {
-            var dmsResult = await godClass.Get(new Core.DMS.Objects.Path(path));
-            return TypedResults.Stream(dmsResult.Data, dmsResult.MimeType);
+            try
+            {
+                var dmsResult = await godClass.Get(new Objects.Path(path));
+                return (IResult)TypedResults.Stream(dmsResult.Data, dmsResult.MimeType);
+            }
+            catch (SecurityException)
+            {
+                return TypedResults.Unauthorized();
+            }
         })
         .WithOpenApi()
         .RequireAuthorization();
 
         app.MapPost("/DMS/{*path}", async ([FromServices] IDMSResultOrchestrationService godClass, [FromServices] IHttpContextAccessor accessor, string moveTo = "", string path = "") =>
         {
-            using var memoryStream = new MemoryStream();
-            await accessor.HttpContext.Request.Body.CopyToAsync(memoryStream);
-            memoryStream.Position = 0;
+            try
+            {
+                using var memoryStream = new MemoryStream();
+                await accessor.HttpContext.Request.Body.CopyToAsync(memoryStream);
+                memoryStream.Position = 0;
 
-            if (!string.IsNullOrEmpty(moveTo))
-                await godClass.Move(new Core.DMS.Objects.Path(path), new Core.DMS.Objects.Path(moveTo));
-            else
-                await godClass.Save(new Core.DMS.Objects.Path(path), memoryStream);
+                if (!string.IsNullOrEmpty(moveTo))
+                    await godClass.Move(new Objects.Path(path), new Objects.Path(moveTo));
+                else
+                    await godClass.Save(new Objects.Path(path), memoryStream);
 
-            return TypedResults.NoContent();
+                return (IResult)TypedResults.NoContent();
+            }
+            catch (SecurityException)
+            {
+                return TypedResults.Unauthorized();
+            }
         })
         .WithOpenApi()
         .RequireAuthorization();
 
         app.MapPut("/DMS/{*path}", async ([FromServices] IDMSResultOrchestrationService godClass, [FromServices] IHttpContextAccessor accesor, string moveTo = "", string path = "") =>
         {
-            using var memoryStream = new MemoryStream();
-            await accesor.HttpContext.Request.Body.CopyToAsync(memoryStream);
-            memoryStream.Position = 0;
+            try
+            {
+                using var memoryStream = new MemoryStream();
+                await accesor.HttpContext.Request.Body.CopyToAsync(memoryStream);
+                memoryStream.Position = 0;
 
-            await godClass.Save(new Core.DMS.Objects.Path(path), memoryStream);
+                await godClass.Save(new Objects.Path(path), memoryStream);
 
-            return TypedResults.NoContent();
+                return (IResult)TypedResults.NoContent();
+            }
+            catch (SecurityException)
+            {
+                return TypedResults.Unauthorized();
+            }
         })
         .WithOpenApi()
         .RequireAuthorization();
